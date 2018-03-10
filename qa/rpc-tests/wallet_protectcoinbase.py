@@ -8,7 +8,8 @@ from test_framework.test_framework import BitcoinTestFramework
 from test_framework.authproxy import JSONRPCException
 from test_framework.mininode import COIN
 from test_framework.util import assert_equal, initialize_chain_clean, \
-    start_nodes, connect_nodes_bi, stop_node, wait_and_assert_operationid_status
+    start_nodes, connect_nodes_bi, stop_node, wait_and_assert_operationid_status, \
+    get_coinbase_address
 
 import sys
 import time
@@ -103,7 +104,7 @@ class WalletProtectCoinbaseTest (BitcoinTestFramework):
         assert_equal("Coinbase funds can only be sent to a zaddr" in errorString, True)
 
         # Prepare to send taddr->zaddr
-        mytaddr = self.nodes[0].getnewaddress()
+        mytaddr = get_coinbase_address(self.nodes[0])
         myzaddr = self.nodes[0].z_getnewaddress()
 
         # Node 3 will test that watch only address utxos are not selected
