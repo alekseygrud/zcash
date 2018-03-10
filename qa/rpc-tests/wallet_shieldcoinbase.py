@@ -7,7 +7,7 @@ from test_framework.test_framework import BitcoinTestFramework
 from test_framework.authproxy import JSONRPCException
 from test_framework.util import assert_equal, initialize_chain_clean, \
     start_node, connect_nodes_bi, sync_blocks, sync_mempools, \
-    wait_and_assert_operationid_status
+    wait_and_assert_operationid_status, get_coinbase_address
 
 from decimal import Decimal
 
@@ -54,7 +54,7 @@ class WalletShieldCoinbaseTest (BitcoinTestFramework):
         assert_equal(self.nodes[2].getbalance(), 30)
 
         # Prepare to send taddr->zaddr
-        mytaddr = self.nodes[0].getnewaddress()
+        mytaddr = get_coinbase_address(self.nodes[0])
         myzaddr = self.nodes[0].z_getnewaddress()
 
         # Shielding will fail when trying to spend from watch-only address
